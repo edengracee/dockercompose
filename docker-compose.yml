@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./api-service
+    ports:
+      - "4000:4000"
+    depends_on:
+      - database
+    environment:
+      DB_HOST: database
+    networks:
+      - app-network
+
+  database:
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
